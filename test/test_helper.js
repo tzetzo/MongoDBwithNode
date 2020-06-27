@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-console.log('test helper un')
+
 before(done => {
   // guarantees test will be run after mongoose connects to MongoDB; run just once!
   mongoose.connect(
