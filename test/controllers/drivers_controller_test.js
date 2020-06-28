@@ -63,9 +63,10 @@ describe("Drivers controller", () => {
 
     Promise.all([seattleDriver.save(), miamiDriver.save()]).then(() => {
       request(app)
-        .get("/api/drivers?lng=-122&lat=47")
+        .get("/api/drivers?lng=-122.47&lat=47.60")
         .end((err, response) => {
-          assert(response.body.length === 1)
+          assert(response.body.length === 1);
+          assert(response.body[0].email === 'seattle@test.com');
           done();
         });
     });
