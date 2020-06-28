@@ -20,6 +20,7 @@ beforeEach(done => {
 
   drivers
     .drop()
+    .then(()=>drivers.ensureIndex({'location': '2dsphere'})) //re-creates the index; necessary to make our location queries
     .then(() => done())
     .catch(() => done());
 });

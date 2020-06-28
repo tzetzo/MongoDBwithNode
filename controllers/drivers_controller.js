@@ -4,6 +4,24 @@ module.exports = {
   greeting(req, res) {
     res.send({ hi: "there" });
   },
+  index(req, res, next) { // finds the drivers within 200km of the supplied location(lng, lat)
+    const { lng, lat } = req.query;
+
+    // query taken from http://thecodebarbarian.com/80-20-guide-to-mongodb-geospatial-queries
+    Driver.find({
+      location: {
+        $nearSphere: {
+          $geometry: {
+            type: "Point",
+            coordinates: [lng, lat]
+          },
+          $maxDistance: 200000 //200 km
+        }
+      }
+    })
+      .then(drivers => res.send(drivers))
+      .catch(next);
+  },
   create(req, res, next) {
     Driver.create(req.body)
       .then(driver => {
